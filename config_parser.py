@@ -14,17 +14,17 @@ class Config:
         self.market_close_hour = int(self.config['General']['market_close_hour'])
         self.partial_day_cutoff = float(self.config['General']['partial_day_cutoff'])
         self.num_entry_cull_cutoff = int(MARKET_DAY_MINUTES * self.partial_day_cutoff)
+        self.input_directory = self.config['General']['input_directory']
+        self.output_directory = self.config['General']['output_directory']
         
         # Parse overnight range times
         or_section = self.config['OvernightRange']
         self.or_start = self._parse_time(or_section['start_time'])
         self.or_end = self._parse_time(or_section['end_time'])
         
-        # Parse listener and trade timeouts
+        # Parse listener timeout
         listener_section = self.config['Listener']
-        trade_section = self.config['Trade']
         self.listener_timeout = int(listener_section['timeout_hours'])
-        self.trade_timeout = int(trade_section['timeout_hours'])
         
         # Parse signals
         self.signals = []
@@ -41,7 +41,5 @@ class Config:
             })
 
     def _parse_time(self, time_str: str) -> datetime:
-        """
-        Parse a time string in HH:MM format into a datetime.time object.
-        """
+        """Parse a time string in HH:MM format into a datetime.time object."""
         return datetime.strptime(time_str, "%H:%M")

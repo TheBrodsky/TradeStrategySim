@@ -1,15 +1,22 @@
 import pandas as pd
-import pytz
 import datetime as dt
 
 
+"""
+Utility functions for parsing and processing market data.
+Assumes the data is in a pandas DataFrame with a datetime index and columns: Open, High, Low, Close, Volume.
+"""
+
+
 def parse_data_into_market_days(file_path: str, from_zone: str, to_zone: str, cutoff_hour: int) -> dict:
+    """Parses a data file into a dictionary of dataframes, each representing a trading day."""
     df = parse_data(file_path)
     df = convert_timezone(df, from_zone, to_zone)
     return groupby_trading_day(df, cutoff_hour)
     
 
 def parse_data(file_path: str) -> pd.DataFrame:
+    """Parse the data file into a DataFrame."""
     # Parse the semicolon-separated data
     df = pd.read_csv(file_path, sep=';', names=['timestamp', 'Open', 'High', 'Low', 'Close', 'Volume'])
     
@@ -25,6 +32,7 @@ def parse_data(file_path: str) -> pd.DataFrame:
 
 
 def convert_timezone(df: pd.DataFrame, from_zone: str, to_zone: str) -> pd.DataFrame:
+    """Converts the timezone of the DataFrame index."""
     # Ensure timestamp is in datetime format
     if not isinstance(df.index, pd.DatetimeIndex):
         df.index = pd.to_datetime(df.index)
@@ -36,9 +44,7 @@ def convert_timezone(df: pd.DataFrame, from_zone: str, to_zone: str) -> pd.DataF
 
 
 def groupby_trading_day(df: pd.DataFrame, cutoff_hour: int) -> dict:
-    """
-    Group data by trading day.
-    """
+    """Breaks the data into multiple DataFrames by trading day based on the cutoff hour."""
     # Extract date and hour
     df['date'] = df.index.date
     df['hour'] = df.index.hour
@@ -59,9 +65,7 @@ def groupby_trading_day(df: pd.DataFrame, cutoff_hour: int) -> dict:
 
 
 def aggregate_data(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Aggregate data to OHLCV format.
-    """
+    """Aggregate data to OHLCV format."""
     aggregated = pd.Series({
         'Open': df['Open'].iloc[0],
         'High': df['High'].max(),
@@ -73,9 +77,7 @@ def aggregate_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def resample_data(df: pd.DataFrame, interval: str) -> pd.DataFrame:
-    """
-    Resample data to a specified interval (e.g., '5T' for 5 minutes, '15T' for 15 minutes)
-    """
+    """Resample data to a specified interval (e.g., '5T' for 5 minutes, '15T' for 15 minutes)"""
     resampled = df.resample(interval).agg({
         'Open': 'first',
         'High': 'max',
