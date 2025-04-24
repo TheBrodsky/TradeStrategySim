@@ -24,3 +24,9 @@ The output of the simulation is a CSV containing the following columns:
 - Trade High, Price - The price a trade hits its upper exit price at, empty if it doesn't
 - Trade Low, Time - The time a trade hits its lower exit price, empty if it doesn't
 - Trade Low, Price - The price a trade hits its lower exit price at, empty if it doesn't
+
+## How to Use
+0. (optional) Edit config.ini
+1. Add OHLCV data to input directory (/input/ by default)
+2. Run exe
+3. Output CSV is put in /output/ by default
