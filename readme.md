@@ -1,6 +1,6 @@
 # Trade Strategy Simulator
 
-This is a simple program designed to simulate a specific trading strategy based on predefined rules and timeframes. The simulator models the behavior of trades, signals, and triggers to evaluate the outcomes of a trading strategy over a given session.
+This is a simple program designed to simulate a specific trading strategy based on predefined rules and timeframes. The simulator models the behavior of signals and trades to evaluate the outcomes of a trading strategy over a given session.
 
 ## Overview
 
