@@ -1,36 +1,26 @@
-starts 3pm (for next day), after hours
-6:30am - session open
-2pm - session close
+# Trade Strategy Simulator
 
+This is a simple program designed to simulate a specific trading strategy based on predefined rules and timeframes. The simulator models the behavior of trades, signals, and triggers to evaluate the outcomes of a trading strategy over a given session.
 
-PROCEDURE:
-1. Determine overnight range: OR_high and OR_low
-2. Signal 1 (S1) range: S1_high, S1_low and S1_range
-3. Set Trigger 1 (T1): T1_high and T1_low
+## Overview
 
+The program operates by:
+1. Defining an **Overnight Range (OR)** to establish high and low price levels during a specific time window.
+2. Generating **Signals** at predefined times to determine potential trading opportunities.
+3. Setting **Listeners** based on signal ranges to initiate trades when an entry price is met.
+4. Simulating **Trades** with defined exit points, tracking their outcomes.
 
-Overnight range (OR):
- - the range between 12am and 6am
- - define high and low in range
-
-Signals (S):
- - s1 = 6:30, 5 min
- - s2 = 7:00, 15 min
- - s3 = 8:15, 15 min
-
-Listener (L):
- - a listener listens for a certain price (L_price) to be hit within a range
- - all lsiteners cutoff after 2 hours
- - if a trigger activates, it spawns a Trade (T)
-
-Trade (T):
- - a trade has a top (Tt) and bottom price (Tb), defined as the trigger price +/- the signal range
- - Tt = L_price + S_range, Tb = L_price - S_range
- - a trade ends when 2 hours elapses from its parent trigger
- - a trade specifies whether it hit the top and/or bottom price and when (in what order)
-
-Output:
-- day
-- whether Listener is IN or OUT of OR
-- Listener outcome
-- Trade outcome (and order)
+## Output
+The output of the simulation is a CSV containing the following columns:
+- Date - A single trading day
+- Signal, ID - ID of the signal spawning this row of data; ID counts from 0 for each day
+- Signal, High/Low - Whether this row is spawned from the upper or lower bound of the signal's range
+- Signal, Price - The high/low signal price for this row. Sets the anchor that determines trade entry and exit prices
+- Signal, In OR - Whether the price is within the Overnight Range
+- Trade Entered, Time - The time a trade is entered, empty if it isn't (because price never hit the trade entry target)
+- Trade Entered, Price - The price a trade is entered at, empty if it isn't
+- Trade Outcome - Whether a trade hit an exit or multiple exits and in what order (e.g. "High", "Low;High")
+- Trade High, Time - The time a trade hits its upper exit price, empty if it doesn't
+- Trade High, Price - The price a trade hits its upper exit price at, empty if it doesn't
+- Trade Low, Time - The time a trade hits its lower exit price, empty if it doesn't
+- Trade Low, Price - The price a trade hits its lower exit price at, empty if it doesn't
