@@ -1,5 +1,10 @@
 # Ignore Python cache directories
 __pycache__/
 
+# Ignore build directories and files
+build/
+dist/
+main.spec
+
 # Ignore output directories
 output/
