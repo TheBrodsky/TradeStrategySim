@@ -2,6 +2,8 @@
 
 This is a simple program designed to simulate a specific trading strategy based on predefined rules and timeframes. The simulator models the behavior of signals and trades to evaluate the outcomes of a trading strategy over a given session.
 
+This was developed as a favor for someone else, and it only simulates 1 trading strategy. I would eventually like to learn more about trading and generalize this into a strategy modeling language.
+
 ## Overview
 
 The program operates by:
